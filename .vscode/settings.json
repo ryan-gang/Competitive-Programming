@@ -1,0 +1,40 @@
+{
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.formatting.provider": "black",
+    "python.testing.pytestArgs": [
+        "Tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "materialTheme.accent": "Purple",
+    // "'mononoki', 'syne mono','novamono', 'Jetbrains Mono', 'fira code'
+    "editor.fontFamily": "'mononoki', 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 15.5,
+    "editor.fontWeight": "300",
+    "editor.inlayHints.fontFamily": "'mononoki', 'Courier New', monospace",
+    "scm.inputFontFamily": "novamono",
+    "debug.console.fontFamily": "fira code",
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "type": "line",
+            "iconColour": "#FFFF00",
+            "foreground": "#FF0000",
+            "background": "#FFFF00",
+        },
+        "FIXME": {
+            "icon": "beaker",
+            "iconColour": "#FF0000",
+            "foreground": "#FFFFFF",
+            "background": "#FF0000"
+        }
+    },
+    "python.defaultInterpreterPath": "venvCP\\Scripts\\python.exe",
+    "editor.tokenColorCustomizations": {
+        "comments": "",
+        "textMateRules": []
+    }
+}

@@ -13,9 +13,15 @@ class Solution:
 
         return dp[-1]
 
+    """
+    For every house, we have 2 choices, either to rob it or skip it.
+    If we skip it our current loot will be dp[i-1]
+    Or if we rob it our current loot will be dp[i-2] + current stash.
+    Then we store the max of these 2 in dp[i].
+    dp[i] is supposed to be the max loot we can achieve after "passing" the ith house.
+    """
     # Runtime: 66 ms, faster than 11.83% of Python3 online submissions.
     # Memory Usage: 13.8 MB, less than 97.22% of Python3 online submissions.
-    # Next challenges:
     # T : O(N), S : O(N)
     def rob2(self, nums):
         dp = [0 for _ in range(len(nums))]
@@ -25,11 +31,15 @@ class Solution:
             # ith cell's max possible value (loot) will be either i - 1th cell's loot,
             # or i - 2th cell's loot + ith cell.
             dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
-
+            # Better to replace this by
+            # for i in range(0, len(nums) - 1):
+            #     dp[i + 1] = max(dp[i], dp[i - 1] + nums[i + 1])
+            # Because in the old code, dp[-1] is accessed in the first iteration.
+            # Technically it is okay, no problems, still best practise.
         return dp[-1]
 
-    # Runtime: 72 ms, faster than 5.63% of Python3 online submissions.
-    # Memory Usage: 13.9 MB, less than 19.67% of Python3 online submissions.
+    # Runtime: 57 ms, faster than 36.12% of Python3 online submissions.
+    # Memory Usage: 13.8 MB, less than 97.21% of Python3 online submissions.
     # T : O(N), S : O(1)
     def rob3(self, nums):
         prevprev = 0
@@ -41,8 +51,8 @@ class Solution:
 
 
 sol = Solution()
-assert sol.rob3(nums=[7, 1, 1, 7]) == 14
-assert sol.rob3(nums=[1, 2, 3, 1]) == 4
-assert sol.rob3(nums=[2, 7, 9, 3, 1]) == 12
-assert sol.rob3(nums=[1, 2, 3]) == 4
-assert sol.rob3(nums=[0]) == 0
+assert sol.rob2(nums=[7, 1, 1, 7]) == 14
+assert sol.rob2(nums=[1, 2, 3, 1]) == 4
+assert sol.rob2(nums=[2, 7, 9, 3, 1]) == 12
+assert sol.rob2(nums=[1, 2, 3]) == 4
+assert sol.rob2(nums=[0]) == 0

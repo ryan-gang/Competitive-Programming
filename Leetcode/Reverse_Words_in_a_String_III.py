@@ -43,6 +43,31 @@ class Solution:
             idx += 1
         return "".join(s[:-1])
 
+    # Runtime: 259 ms, faster than 5.04% of Python3 online submissions.
+    # Memory Usage: 14.6 MB, less than 46.10% of Python3 online submissions.
+    def reverseWords3(self, s: str) -> str:
+        s = list(s)  # Because python strings are immutable,this is reqired for inplace swapping.
+        s.append(" ")
+        # Words are demarcated by, spaces so the last word is not getting processed.
+        # This helps in processing the last word.
+        i, n, start_prev = 0, len(s), 0
+        while i < n:
+            if s[i] == " ":
+                # Finding out spaces, and then reversing the word ending in the prev index.
+                self.reverse(s, start_prev, i - 1)
+                start_prev = i + 1
+            i += 1
+        return "".join(s)[
+            :-1
+        ]  # Return a string from the list, and remove the extra space we added.
+
+    def reverse(self, s, start, end):
+        # Swap chars in place.
+        while start < end:
+            s[start], s[end] = s[end], s[start]
+            start += 1
+            end -= 1
+
 
 sol = Solution()
 assert sol.reverseWords(s="Let's take LeetCode contest") == "s'teL ekat edoCteeL tsetnoc"

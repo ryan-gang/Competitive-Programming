@@ -16,6 +16,13 @@ class Solution:
             hi -= 1
         return s
 
+    # Using bitwise inversion.
+    # i from start, is swapped with -[i+1] (from end.)
+    # ~i produces just that.
+    def reverseStringBitWise(self, s):
+        for i in range(len(s) // 2):
+            s[i], s[~i] = s[~i], s[i]
+
 
 sol = Solution()
 assert sol.reverseString(s=["h", "e", "l", "l", "o"]) == ["o", "l", "l", "e", "h"]

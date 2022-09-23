@@ -57,6 +57,29 @@ class Solution:
         cur.next = l1 or l2
         return dummy.next
 
+    # Runtime: 65 ms, faster than 44.83% of Python3 online submissions.
+    # Memory Usage: 14 MB, less than 32.73% of Python3 online submissions.
+    # While both lists are still present, check for lower value, add to prev.next.
+    # Increment prev and the list node.
+    # Finally the list that remains, add the whole thing to the end of the sorted list.
+    def mergeTwoListsCleanSelf(
+        self, head1: Optional[ListNode], head2: Optional[ListNode]
+    ) -> Optional[ListNode]:
+        node = head = ListNode(None)
+        while head1 and head2:
+            if head1.val < head2.val:
+                node.next = head1
+                head1 = head1.next
+            else:
+                node.next = head2
+                head2 = head2.next
+            node = node.next
+
+        if head1 or head2:  # This condition is not required.
+            node.next = head1 or head2
+
+        return head.next
+
 
 sol = Solution()
 array1, array2 = [1, 3, 5, 7, 9], [2, 4, 6, 8, 10]

@@ -46,7 +46,8 @@ class Solution:
         return dp[-1][-1]
 
 
-# Ref : https://leetcode.com/problems/unique-paths/discuss/267043/Python3-Solution-backtracking-with-memoization.
+# Ref : https://leetcode.com/problems/unique-paths/
+# discuss/267043/Python3-Solution-backtracking-with-memoization.
 sol = Solution()
 
 assert sol.uniquePaths(m=3, n=7) == 28

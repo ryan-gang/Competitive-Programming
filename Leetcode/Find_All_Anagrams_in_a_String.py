@@ -10,6 +10,7 @@ class Solution:
         out = []
         idx = window_size = len(p)
         # Can also use an array of length 26, instead of an hash-map.
+        # But not a bit-array, possible values are not only 0 and 1.
         P = Counter(p)
         # Create counter of P, and create counter of sliding window of S.
         # If both counters are equal, add index to out.
@@ -18,6 +19,9 @@ class Solution:
             out.append(idx - window_size)
 
         for idx in range(window_size, len(s)):
+            # This is the index of the new char added to the sliding window.
+            # And we update the sliding window counter accordingly.
+            # And check with the other counter.
             add_char = s[idx]
             del_char = s[idx - window_size]
             S[add_char] += 1

@@ -33,6 +33,35 @@ class Solution:
 
         return head
 
+    """
+    Exact same concept as the previous one.
+    Take node, to n - 1 places ahead.
+    Then while node is a valid, take both node and curr to next.
+    Finally bypass the current required (curr) node, for that we use a prev node."""
+    # Runtime: 56 ms, faster than 51.20% of Python3 online submissions.
+    # Memory Usage: 13.8 MB, less than 97.95% of Python3 online submissions.
+    def removeNthFromEnd2(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        node = head
+        while n > 1:
+            node = node.next
+            n -= 1
+
+        prev, curr = None, head
+        while node.next:
+            node = node.next
+            prev = curr
+            curr = curr.next
+
+        if prev is not None:
+            # prev has come ahead by atleast 1 node. ie n != len(list)
+            # Just bypass curr node.
+            prev.next = curr.next
+            return head
+        else:
+            # If prev is none, that means n == len(list), prev is still at the beginning dummy.
+            # Just return head.next (Bypass head node)
+            return head.next
+
 
 sol = Solution()
 array, n = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2

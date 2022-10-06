@@ -27,12 +27,10 @@ def treeNodeToString(root):
 
 
 def stringToTreeNode(input):
-    input = input.strip()
-    input = input[1:-1]
     if not input:
         return None
 
-    inputValues = [s.strip() for s in input.split(",")]
+    inputValues = [s for s in input]
     root = TreeNode(int(inputValues[0]))
     nodeQueue = [root]
     front = 0
@@ -74,6 +72,28 @@ def prettyPrintTree(node, prefix="", isLeft=True):
         prettyPrintTree(node.left, prefix + ("    " if isLeft else "│   "), True)
 
 
+# Traversals.
+def inorder(node):
+    if node is not None:
+        inorder(node.left)
+        print(node.val, end=", ")
+        inorder(node.right)
+
+
+def preorder(node):
+    if node is not None:
+        print(node.val, end=", ")
+        preorder(node.left)
+        preorder(node.right)
+
+
+def postorder(node):
+    if node is not None:
+        postorder(node.left)
+        postorder(node.right)
+        print(node.val, end=", ")
+
+
 def main():
     import sys
 
@@ -92,4 +112,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    tree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    node = stringToTreeNode(tree)
+    prettyPrintTree(node)
+    print("\nInorder")
+    inorder(node)

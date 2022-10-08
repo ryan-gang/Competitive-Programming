@@ -1,9 +1,12 @@
+from typing import Optional
+
+
 # Definition for a binary tree node.
 class TreeNode:
-    def __init__(self, x):
+    def __init__(self, x, left: Optional["TreeNode"] = None, right: Optional["TreeNode"] = None):
         self.val = x
-        self.left = None
-        self.right = None
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
 
 
 def treeNodeToString(root):

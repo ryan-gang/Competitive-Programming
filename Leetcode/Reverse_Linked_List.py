@@ -7,7 +7,8 @@ class Solution:
     If len = 0, initial value of prev (None) is returned. Expected.
     If len = 1, loop runs for 1 iteration. curr.next is set to None.
     And next iteration loop exits. As expected.
-    Much cleaner code."""
+    Much cleaner code.
+    """
 
     # Runtime: 82 ms, faster than 6.32% of Python3 online submissions.
     # Memory Usage: 15.5 MB, less than 56.30% of Python3 online submissions.
@@ -23,7 +24,8 @@ class Solution:
 
     """
     Explicitly handling len = 0 and len = 1 cases.
-    Can be handled more gracefully by the above method."""
+    Can be handled more gracefully by the above method.
+    """
     # Runtime: 90 ms, faster than 5.46% of Python3 online submissions.
     # Memory Usage: 15.4 MB, less than 55.32% of Python3 online submissions.
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -47,13 +49,14 @@ class Solution:
         return prev
 
 
-sol = Solution()
-array = []
-array = [1]
-array = [1, 2]
-array = [1, 2, 3]
-array = [1, 2, 3, 4]
-array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-head = arrayToListNode(array)
-prettyPrintLinkedList(head)
-prettyPrintLinkedList(sol.reverseList(head))
+if __name__ == "__main__":
+    sol = Solution()
+    # array = []
+    # array = [1]
+    # array = [1, 2]
+    # array = [1, 2, 3]
+    # array = [1, 2, 3, 4]
+    array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    ll_head = arrayToListNode(array)
+    prettyPrintLinkedList(ll_head)
+    prettyPrintLinkedList(sol.reverseList(ll_head))

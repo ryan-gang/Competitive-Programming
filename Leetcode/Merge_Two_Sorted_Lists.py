@@ -42,30 +42,15 @@ class Solution:
         prettyPrintLinkedList(head)
         return head
 
-    def mergeTwoListsClean(
-        self, l1: Optional[ListNode], l2: Optional[ListNode]
-    ) -> Optional[ListNode]:
-        dummy = cur = ListNode(0)
-        while l1 and l2:
-            if l1.val < l2.val:
-                cur.next = l1
-                l1 = l1.next
-            else:
-                cur.next = l2
-                l2 = l2.next
-            cur = cur.next
-        cur.next = l1 or l2
-        return dummy.next
-
     # Runtime: 65 ms, faster than 44.83% of Python3 online submissions.
     # Memory Usage: 14 MB, less than 32.73% of Python3 online submissions.
     # While both lists are still present, check for lower value, add to prev.next.
     # Increment prev and the list node.
     # Finally the list that remains, add the whole thing to the end of the sorted list.
-    def mergeTwoListsCleanSelf(
+    def merge_two_lists_clean(
         self, head1: Optional[ListNode], head2: Optional[ListNode]
     ) -> Optional[ListNode]:
-        node = head = ListNode(None)
+        node = head = ListNode(0)
         while head1 and head2:
             if head1.val < head2.val:
                 node.next = head1
@@ -75,8 +60,8 @@ class Solution:
                 head2 = head2.next
             node = node.next
 
-        if head1 or head2:  # This condition is not required.
-            node.next = head1 or head2
+        # if head1 or head2:  # This condition is not required.
+        node.next = head1 or head2
 
         return head.next
 
@@ -87,6 +72,6 @@ array1, array2 = [1, 2, 3], [0, 3, 5]
 array1, array2 = [], []
 array1, array2 = [], [0]
 
-head1 = arrayToListNode(array1)
-head2 = arrayToListNode(array2)
-print("Out list : ", prettyPrintLinkedList(sol.mergeTwoLists(head1, head2)))
+h1 = arrayToListNode(array1)
+h2 = arrayToListNode(array2)
+print("Out list : ", prettyPrintLinkedList(sol.mergeTwoLists(h1, h2)))

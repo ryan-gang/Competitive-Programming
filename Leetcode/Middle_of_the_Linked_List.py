@@ -1,12 +1,5 @@
 from typing import Optional
-from StarterCode.Linked_List_Utils import arrayToListNode, prettyPrintLinkedList
-
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from StarterCode.Linked_List_Utils import ListNode, arrayToListNode, prettyPrintLinkedList
 
 
 class Solution:
@@ -28,7 +21,8 @@ class Solution:
     Each time, slow go 1 steps while fast go 2 steps.
     When fast arrives at the end, slow will arrive right in the middle. No need to think about
     fast always being valid, let it be None. Slow is anyway behind,
-    it will come to the appropriate position."""
+    it will come to the appropriate position.
+    """
 
     def middleNodeOptimsedCode(self, head):
         slow = fast = head
@@ -38,10 +32,11 @@ class Solution:
         return slow
 
 
-sol = Solution()
-array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-array = [1]
-head = arrayToListNode(array)
-prettyPrintLinkedList(head)
-prettyPrintLinkedList(sol.middleNode(head))
+if __name__ == "__main__":
+    sol = Solution()
+    # array = [1]
+    # array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    head = arrayToListNode(array)
+    prettyPrintLinkedList(head)
+    prettyPrintLinkedList(sol.middleNode(head))

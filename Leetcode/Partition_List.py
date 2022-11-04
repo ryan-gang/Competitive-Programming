@@ -3,11 +3,11 @@ from StarterCode.Linked_List_Utils import arrayToListNode, prettyPrintLinkedList
 
 
 class Solution:
-    # Runtime: 44 ms, faster than 75.06% of Python3 online submissions for Partition List.
-    # Memory Usage: 13.9 MB, less than 75.71% of Python3 online submissions for Partition List.
+    # Runtime: 44 ms, faster than 75.06% of Python3 online submissions.
+    # Memory Usage: 13.9 MB, less than 75.71% of Python3 online submissions.
     # T : O(N), S : O(1)
     # Algo takes only a single pass over Linked list.
-    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+    def partitionMessy(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
         if not head:
             return head
 
@@ -42,12 +42,40 @@ class Solution:
 
         return first_half_head
 
+    """
+    Just create 2 new lists one with all values less than x,
+    and the other with all values greater than x.
+    Finally join both. And set end to None.
+    """
+    # Runtime: 59 ms, faster than 69.06% of Python3 online submissions.
+    # Memory Usage: 14 MB, less than 30.14% of Python3 online submissions.
+    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+        before = b = ListNode(0)
+        after = a = ListNode(0)
+        curr = head
 
-head = arrayToListNode([1, 2, 2, 4, 6, 3, 2, 1, 5, 2])
-prettyPrintLinkedList(head)
-sol = Solution()
-first_half_head = sol.partition(head, x=3)
-# first_half_head = sol.partition(arrayToListNode([1, 4, 3, 2, 5, 2]), x=3)
-# first_half_head = sol.partition(arrayToListNode([2, 1]), x=2)
-# first_half_head = sol.partition(arrayToListNode([1, 2, 3]), x=4)
-prettyPrintLinkedList(first_half_head)
+        while curr:
+            if curr.val < x:
+                b.next = curr
+                b = b.next
+            else:
+                a.next = curr
+                a = a.next
+            curr = curr.next
+
+        a.next = None
+        b.next = after.next
+        return before.next
+
+
+if __name__ == "__main__":
+    sol = Solution()
+    array = [1, 2, 2, 4, 6, 3, 2, 1, 5, 2]
+    # array = [1, 4, 3, 2, 5, 2]
+    # array = [2, 1]
+    # array = [1, 2, 3]
+    # array = []
+
+    head = arrayToListNode(array)
+    prettyPrintLinkedList(head)
+    prettyPrintLinkedList(sol.partition(head, x=3))

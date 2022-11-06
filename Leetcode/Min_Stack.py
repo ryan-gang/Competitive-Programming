@@ -19,7 +19,11 @@ class MinStack:
     And then we append this with the current node of the stack.
     So, at every node of the stack, we keep track of the value, and the min upto this point.
     If this node is popped, the next node still keeps track of the min upto that point.
-    Very elegant solution. Without extra computation or space.
+    Very elegant solution. Without extra computation but some extra space.
+    We can further improve this by keeping a 2nd stack, where we keep min numbers,
+    but only if they change.
+    Like, if min till now is 5, 5 is pushed. If a number <= 5 comes, we push it. Else nope.
+    While popping, we keep a track if the min is pushed or not.
     """
 
     def __init__(self):

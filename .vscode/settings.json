@@ -10,7 +10,7 @@
     "python.testing.pytestEnabled": true,
     "materialTheme.accent": "Purple",
     // "'mononoki', 'syne mono','novamono', 'Jetbrains Mono', 'fira code'
-    "editor.fontFamily": "'mononoki', 'Courier New', monospace",
+    "editor.fontFamily": "'Iosevka Comfy', 'Courier New', monospace",
     "editor.fontLigatures": true,
     "editor.fontSize": 15.5,
     "editor.fontWeight": "300",
@@ -36,5 +36,6 @@
     "editor.tokenColorCustomizations": {
         "comments": "",
         "textMateRules": []
-    }
+    },
+    "python.analysis.typeCheckingMode": "basic"
 }

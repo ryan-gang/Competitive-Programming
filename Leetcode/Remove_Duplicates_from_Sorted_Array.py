@@ -5,12 +5,12 @@ from typing import List
 
 class Solution:
     """
-    If we are allowed to use extra space, we can use a dictionary, to keep track of dupes,
-    and just write the unique elements back to the original array.
-    But to optimise it, and not use extra space.
-    We can keep track of only the duplicates, we have seen till now. And then if we see a
-    new unique element we overwrite the dupes with this. The trick is the next index where
-    we should write our unique element is `i - left_shift`,
+    If we are allowed to use extra space, we can use a dictionary, to keep
+    track of dupes, and just write the unique elements back to the original
+    array. But to optimise it, and not use extra space. We can keep track of
+    only the duplicates, we have seen till now. And then if we see a new
+    unique element we overwrite the dupes with this. The trick is the next
+    index where we should write our unique element is `i - left_shift`,
     where left_shift is the running count of dupes we saw till now.
     """
 
@@ -28,7 +28,26 @@ class Solution:
 
         return n - left_shift
 
+    # Runtime: 116 ms, faster than 83.70% of Python3 online submissions.
+    # Memory Usage: 15.7 MB, less than 20.60% of Python3 online submissions.
+    def removeDuplicates2(self, nums: List[int]) -> int:
+        write = 0
+        for i in range(len(nums)):
+            curr, prev = nums[i], nums[i - 1]
+            if i > 0 and curr == prev:
+                continue
+            nums[write] = curr
+            write += 1
+
+        print(nums[:write])
+        return write
+
 
 if __name__ == "__main__":
     sol = Solution()
     assert (sol.removeDuplicates(nums=[1, 2, 3, 3, 3, 4, 4, 5, 6, 7])) == 7
+    assert (
+        sol.removeDuplicates(nums=[0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 6, 7, 8, 9, 9, 9, 9, 9])
+        == 10
+    )
+    assert sol.removeDuplicates(nums=[0]) == 1

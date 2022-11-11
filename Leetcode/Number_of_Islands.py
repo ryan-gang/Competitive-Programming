@@ -121,6 +121,11 @@ class Solution:
             for c, cell in enumerate(row):
                 if cell == "1":
                     node1 = r * n + c
+                    """
+                    Instead of searching through all the 4 directional neighbours, we can just
+                    look at 2 directions, bottom and right. All left and up have already been
+                    seen, DSU is also undirected.
+                    """
                     for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                         rr, cc = r + dr, c + dc
                         if rr >= 0 and rr < m and cc >= 0 and cc < n and grid[rr][cc] == "1":

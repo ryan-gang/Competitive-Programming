@@ -107,7 +107,8 @@ class Solution:
 
     def numIslands(self, grid: List[List[str]]) -> int:
         m, n = len(grid), len(grid[0])
-        uf = Union(m, n)
+        L = ((m * n) + 1)
+        uf = Union(L)
         islands = 0
 
         for r, row in enumerate(grid):

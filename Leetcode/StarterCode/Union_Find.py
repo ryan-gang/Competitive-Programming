@@ -1,7 +1,7 @@
 class Union:
     """
-    Basic implementation of a DSU data structure.
-    parent is an array, of size m*n+1, where we keep track of
+    DSU data structure. (With Path Compression Optimization)
+    parent is an array, of size L, where we keep track of
     all relationships between the disjoint sets.
     find(node) can be used to find the parent of a particular node.
     union(n1, n2) can be used to union 2 nodes, if they are disjoint.
@@ -9,13 +9,14 @@ class Union:
     new(node) can be used to add a new node to the parent array.
     """
 
-    def __init__(self, m: int, n: int) -> None:
-        self.parent = [-1] * ((m * n) + 1)
+    def __init__(self, L: int) -> None:
+        self.parent = [-1] * L
 
     def find(self, node: int) -> int:
         if self.parent[node] == node:
             return node
         else:
+            # path-compression-optimization
             self.parent[node] = self.find(self.parent[node])
             return self.parent[node]
 
@@ -33,3 +34,5 @@ class Union:
 
 # Ref : https://leetcode.com/problems/number-of-islands/discuss/56354
 # /1D-Union-Find-Java-solution-easily-generalized-to-other-problems
+
+# Ref : https://cp-algorithms.com/data_structures/disjoint_set_union.html

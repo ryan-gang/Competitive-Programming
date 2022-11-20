@@ -46,6 +46,7 @@ class Solution:
         return self.fibCache(n - 1) + self.fibCache(n - 2)
 
     # iterative space-optimized
+    @staticmethod
     def fibIter(N):
         if N == 0:
             return 0
@@ -56,6 +57,7 @@ class Solution:
         return memo[-1]
 
     # can use a tuple for better performance
+    @staticmethod
     def fibIter3(N):
         if N == 0:
             return 0
@@ -75,31 +77,35 @@ class Solution:
     # To accomodate for n = 0, we need a condition in the return block.
     # Instead just run the loop for one more time, and return a always.
     # That way 0 case will be handled.
+    @staticmethod
     def fib0(n):
         a, b = 0, 1
         for _ in range(n - 2 + 1):
             a, b = b, a + b
         return b if n > 0 else a
 
+    @staticmethod
     def fib(n):
         a, b = 0, 1
         for _ in range(n):
             a, b = b, a + b
         return a
 
+    @staticmethod
+    @lru_cache
+    # Visualize the call stack.
+    # Also see the effect of @lru_cache in Action. Very cool.
+    def fibonacci_visualize(n):
+        print("{indent}fibonacci({n}) called".format(indent="|" + "_" * stack_depth(), n=n))
+        if n <= 2:
+            return 1
+        return Solution.fibonacci_visualize(n - 1) + Solution.fibonacci_visualize(n - 2)
+
 
 def stack_depth():
     return len(inspect.getouterframes(inspect.currentframe())) - 1
 
 
-# # @lru_cache
-# Very interesting to see the call stack printed out like this.
-# Also see the effect of @lru_cache in Action.
-def fibonacci(n):
-    print("{indent}fibonacci({n}) called".format(indent=" " * stack_depth(), n=n))
-    if n <= 2:
-        return 1
-    return fibonacci(n - 1) + fibonacci(n - 2)
-
-
-# fibonacci(15)
+if __name__ == "__main__":
+    sol = Solution()
+    sol.fibonacci_visualize(15)

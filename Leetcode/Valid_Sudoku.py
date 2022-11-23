@@ -2,9 +2,20 @@ from collections import defaultdict
 from typing import List
 
 
-# Runtime: 213 ms, faster than 6.54% of Python3 online submissions...
-# Memory Usage: 13.8 MB, less than 81.20% of Python3 online submissions...
 class Solution:
+    """
+    We have 3 dictionaries, rows, cols, and subs.
+    For every cell in the board, we update the value in it's row, col, sub.
+    Updating is also done optimally, for every index in every dict, we have a binary string.
+    If a value is seen, that index in the binary num is set.
+    So if we see repeated digits, the binary won't change, we do a check over here.
+    If it is in the dict already we return False.
+    Very clean and optimal solution.
+    """
+
+    # Runtime: 213 ms, faster than 6.54%.
+    # Memory Usage: 13.8 MB, less than 81.20%.
+    # T : O(N) (Single pass over board.), S : O(N)
     def parseCell(self, dictionary: dict[str, int], key: str, val: int) -> bool:
         temp: int = dictionary.get(key, 0)
         temp = temp | (1 << val)
@@ -15,9 +26,9 @@ class Solution:
             return True
 
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        cols: dict = defaultdict(int)
-        rows: dict = defaultdict(int)
-        subs: dict = defaultdict(int)
+        cols: dict[str, int] = defaultdict(int)
+        rows: dict[str, int] = defaultdict(int)
+        subs: dict[str, int] = defaultdict(int)
 
         for i in range(len(board)):
             for j in range(len(board[i])):
@@ -32,24 +43,9 @@ class Solution:
         return True
 
 
-board = [
-    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
-    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
-    [".", "9", "8", ".", ".", ".", ".", "6", "."],
-    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
-    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
-    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
-    [".", "6", ".", ".", ".", ".", "2", "8", "."],
-    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
-    [".", ".", ".", ".", "8", ".", ".", "7", "9"],
-]
-sol = Solution()
-print(sol.isValidSudoku(board))
-
-
-# Runtime: 122 ms, faster than 58.52% of Python3 online submissions for Valid Sudoku.
-# Memory Usage: 13.9 MB, less than 81.20% of Python3 online submissions for Valid Sudoku.
 class Solution2:
+    # Runtime: 122 ms, faster than 58.52%.
+    # Memory Usage: 13.9 MB, less than 81.20%.
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         seen: set = set()
         for i in range(len(board)):
@@ -65,3 +61,19 @@ class Solution2:
                     else:
                         seen.update({row_string, col_string, sub_string})
         return True
+
+
+if __name__ == "__main__":
+    board = [
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"],
+    ]
+    sol = Solution()
+    print(sol.isValidSudoku(board))

@@ -3,8 +3,8 @@ from StarterCode.Linked_List_Utils import ListNode, arrayToListNode, prettyPrint
 
 
 class Solution:
-    # Runtime: 24 ms, faster than 99.35% of Python3 online submissions.
-    # Memory Usage: 13.9 MB, less than 55.55% of Python3 online submissions.
+    # Runtime: 24 ms, faster than 99.35%.
+    # Memory Usage: 13.9 MB, less than 55.55%.
     # T : O(N), S : O(1)
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         fast = slow = head
@@ -19,12 +19,14 @@ class Solution:
 
     """
     Each time, slow go 1 steps while fast go 2 steps.
-    When fast arrives at the end, slow will arrive right in the middle. No need to think about
-    fast always being valid, let it be None. Slow is anyway behind,
+    When fast arrives at the end, slow will arrive right in the middle.
+    No need to think about fast always being valid, let it be None. Slow is anyway behind,
     it will come to the appropriate position.
     """
-
-    def middleNodeOptimsedCode(self, head):
+    # Runtime: 33 ms, faster than 91.30%.
+    # Memory Usage: 13.9 MB, less than 11.63%.
+    # T : O(N), S : O(1)
+    def middleNodeOptimsedCode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         slow = fast = head
         while fast and fast.next:
             slow = slow.next

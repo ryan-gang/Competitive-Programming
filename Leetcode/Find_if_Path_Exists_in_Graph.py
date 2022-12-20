@@ -1,6 +1,8 @@
 from collections import defaultdict, deque
 from typing import List, Set
 
+from StarterCode.Union_Find import Union
+
 
 # Ref : https://leetcode.com/problems/find-if-path-exists-in-graph/
 # discuss/2673635/Bidirectional-Search-in-Python
@@ -143,10 +145,35 @@ class Solution:
 
         return bfs_bidirection(source, destination)
 
+    # Runtime: 4669 ms, faster than 26.95%.
+    # Memory Usage: 103.6 MB, less than 90.52%.
+    # T : O(N), S : O(N) # FIXME Not Sure.
+    def validPathDSU(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        """
+        Using Union Find to solve the question.
+        Every node is added as a node in our DSU.
+        And for every edge, between them the two nodes are joint together.
+        Finally we check if the source and destination are joint or not."""
+        uf = Union(n)
+        for v1, v2 in edges:
+            if not uf.exists(v1):
+                uf.new(v1)
+            if not uf.exists(v2):
+                uf.new(v2)
+            uf.union(v1, v2)
+
+        return uf.find(source) == uf.find(destination)
+
 
 if __name__ == "__main__":
     sol = Solution()
-    assert sol.validPathBidirectional(n=3, edges=[[0, 1], [1, 2], [2, 0]], source=0, destination=2)
-    assert not sol.validPathBidirectional(
+    assert sol.validPathDSU(n=3, edges=[[0, 1], [1, 2], [2, 0]], source=0, destination=2)
+    assert not sol.validPathDSU(
         n=6, edges=[[0, 1], [0, 2], [3, 5], [5, 4], [4, 3]], source=0, destination=5
+    )
+    assert not sol.validPathDSU(
+        n=10,
+        edges=[[2, 9], [7, 8], [5, 9], [7, 2], [3, 8], [2, 8], [1, 6], [3, 0], [7, 0], [8, 5]],
+        source=1,
+        destination=0,
     )

@@ -53,6 +53,21 @@ class Solution:
 
         return idx == len(nums)
 
+    # Runtime:519 ms, faster than 83.88%.
+    # Memory Usage: 15.1 MB, less than 97.51%.
+    # T : O(N), S : O(1)
+    def canJump3(self, nums: List[int]) -> bool:
+        max_range = nums[0]
+        for idx, jump in enumerate(nums[1:]):
+            if max_range == 0:
+                # If we can't jump anymore, return if we are at the end of the array.
+                return idx == len(nums) - 1
+            max_range -= 1  # Else, reduce range by 1.
+            max_range = max(max_range, jump)  # Update range with the current jump value.
+
+        # Finally return if we have reached the end with range >= 0.
+        return max_range >= 0
+
 
 if __name__ == "__main__":
     sol = Solution()
@@ -63,3 +78,4 @@ if __name__ == "__main__":
     assert not sol.canJump(nums=[0, 2, 3])
     assert sol.canJump(nums=[2, 0, 0])
     assert sol.canJump(nums=[1, 2, 3])
+    assert not sol.canJump(nums=[0, 1])

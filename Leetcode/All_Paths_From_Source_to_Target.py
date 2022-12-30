@@ -45,13 +45,32 @@ class Solution:
             self.traverse(next_node, path)
             path.pop()
 
+    # Runtime: 102 ms, faster than 88.68%.
+    # Memory Usage: 15.6 MB, less than 78.57%.
+    # T : O(Edges), S : O(Nodes)
+    def allPathsSourceTarget1(self, graph: List[List[int]]) -> List[List[int]]:
+        paths = []
+        src, dst = 0, len(graph) - 1
 
-sol = Solution()
-assert (sol.allPathsSourceTarget(graph=[[4, 3, 1], [3, 2, 4], [3], [4], []])) == [
-    [0, 4],
-    [0, 3, 4],
-    [0, 1, 3, 4],
-    [0, 1, 2, 3, 4],
-    [0, 1, 4],
-]
-assert sol.allPathsSourceTarget(graph=[[1, 2], [3], [3], []]) == [[0, 1, 3], [0, 2, 3]]
+        def dfs(idx, path):
+            if idx == dst:
+                paths.append(path[:])
+            for next in graph[idx]:
+                path.append(next)
+                dfs(next, path)
+                path.pop()
+
+        dfs(src, [src])
+        return paths
+
+
+if __name__ == "__main__":
+    sol = Solution()
+    assert (sol.allPathsSourceTarget(graph=[[4, 3, 1], [3, 2, 4], [3], [4], []])) == [
+        [0, 4],
+        [0, 3, 4],
+        [0, 1, 3, 4],
+        [0, 1, 2, 3, 4],
+        [0, 1, 4],
+    ]
+    assert sol.allPathsSourceTarget(graph=[[1, 2], [3], [3], []]) == [[0, 1, 3], [0, 2, 3]]

@@ -8,6 +8,12 @@ class Solution:
     # N^2 for creating a list of all palindromes,
     # 2^N for perusing all substrings, checking for palindromes.
     def partition(self, s: str) -> List[List[str]]:
+        """
+        First we generate a list of all possible palindromes in the given string.
+        Both odd length, and even length.
+        We use a trick where we start from an index, and expand outwards while checking for matches.
+        Then we iterate over the entire string, using backtracking, and check for palindromes.
+        """
         n = len(s)
         palindromes: Set[str] = set()
 

@@ -4,6 +4,7 @@ from typing import List
 class Solution:
     """
     First attempt, ignore this solution."""
+
     # Runtime: 296 ms, faster than 24.64% of Python3 online submissions.
     # Memory Usage: 15.3 MB, less than 11.07% of Python3 online submissions.
     def pivotIndexChaos(self, nums: List[int]) -> int:
@@ -41,7 +42,7 @@ class Solution:
         return -1
 
     # My solution is needlessly chaotic, this is much better and clean.
-    def pivotIndexClean(self, nums):
+    def pivotIndexClean(self, nums: list[int]):
         S = sum(nums)
         left_sum = 0
         for i, x in enumerate(nums):
@@ -57,7 +58,7 @@ class Solution:
     Then after the comparison add the ith index to the prefix_sum for the next iteration."""
     # Runtime: 157 ms, faster than 93.91% of Python3 online submissions.
     # Memory Usage: 15.3 MB, less than 11.31% of Python3 online submissions.
-    def pivotIndex(self, nums: List[int]) -> int:
+    def pivotIndexElegant(self, nums: List[int]) -> int:
         suffix_sum = sum(nums)
         prefix_sum = 0
         for i, v in enumerate(nums):
@@ -66,6 +67,19 @@ class Solution:
                 return i
             prefix_sum += v
         return -1
+
+    # Runtime: 506 ms, faster than 19.39%.
+    # Memory Usage: 15 MB, less than 99.39%.
+    # T : O(N), S : O(N)
+    def pivotIndex(self, nums: List[int]) -> int:
+        left_sum, right_sum = 0, sum(nums) - nums[0]
+        idx = 1
+        while idx < len(nums) and left_sum != right_sum:
+            left_sum += nums[idx - 1]
+            right_sum -= nums[idx]
+            idx += 1
+
+        return idx - 1 if left_sum == right_sum else -1
 
 
 sol = Solution()

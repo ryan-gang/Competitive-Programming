@@ -1,3 +1,4 @@
+from itertools import accumulate
 from typing import List
 
 
@@ -5,11 +6,11 @@ class Solution:
     # Runtime: 43 ms, faster than 82.81% of Python3 online submissions.
     # Memory Usage: 14.2 MB, less than 27.03% of Python3 online submissions.
     def runningSum(self, nums: List[int]) -> List[int]:
-        out = []
-        runningSum = 0
+        out: List[int] = []
+        running = 0
         for num in nums:
-            runningSum += num
-            out.append(runningSum)
+            running += num
+            out.append(running)
 
         return out
 
@@ -20,3 +21,6 @@ class Solution:
             nums[i] += nums[i - 1]
 
         return nums
+
+    def runningSumInbuilt(self, nums: List[int]) -> List[int]:
+        return list(accumulate(nums))

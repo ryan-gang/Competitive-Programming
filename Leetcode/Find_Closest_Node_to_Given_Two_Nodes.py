@@ -6,6 +6,12 @@ class Solution:
     # Memory Usage: 52.6 MB, less than 45.40%.
     # T : O(Nodes), S : O(Nodes)
     def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:
+        """
+        We traverse starting from both the nodes, and keep a track of all visited nodes and
+        distance from the starting node.
+        Finally we check which are the nodes reachable from both starting nodes,
+        and find the node with the min distance.
+        """
         visited1: dict[int, int] = {}
         visited2: dict[int, int] = {}
         dist, node = 0, node1

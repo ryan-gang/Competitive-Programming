@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 class Solution:
     # Runtime: 84 ms, faster than 85.07% of Python3 online submissions.
     # Memory Usage: 14.1 MB, less than 31.78% of Python3 online submissions.
@@ -5,7 +8,7 @@ class Solution:
     # T : O(l1) to create the array1, and then l2 - l1 iterations, comparing arrays of length 26.
     # Time is still not optimal, instead of comparing entire arrays
     # in every iteration, try to compare the changes.
-    def checkInclusion(self, s1: str, s2: str) -> bool:
+    def checkInclusion1(self, s1: str, s2: str) -> bool:
         if len(s2) < len(s1):
             return False
         array1 = [0 for _ in range(26)]
@@ -73,15 +76,40 @@ class Solution:
 
         return count == 26
 
+    # Runtime: 109 ms, faster than 55.15%.
+    # Memory Usage: 13.9 MB, less than 94.40%.
+    # T : O(L1 + 26(L2 - L1)), S : O(1) (26 keys. Constant.)
+    # Creating hashmap for s1 -> l1, for s2 -> l1. (same length).
+    # Then for l2 - l1 chars in s2, we do a comparison between 2 dicts.
+    # O(26) keys at most.
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        # Compare rolling counters of 2 strings, (same window sizes.)
+        lo, hi = 0, len(s1)
+        d1 = Counter(s1)
+        d2 = Counter(s2[:hi])
+
+        if d1 == d2:
+            return True
+
+        while hi < len(s2):
+            d2[s2[lo]] -= 1
+            d2[s2[hi]] += 1
+            if d1 == d2:
+                return True
+            lo += 1
+            hi += 1
+
+        return d1 == d2
+
 
 if __name__ == "__main__":
     sol = Solution()
-    assert sol.checkInclusion2(s1="ab", s2="eidbaooo")
-    assert not (sol.checkInclusion2(s1="ab", s2="eidboaoo"))
-    assert sol.checkInclusion2(s1="a", s2="ab")
-    assert sol.checkInclusion2(s1="adc", s2="dcda")
-    assert not sol.checkInclusion2(s1="ab", s2="a")
-    assert sol.checkInclusion2(
+    assert sol.checkInclusion(s1="ab", s2="eidbaooo")
+    assert not sol.checkInclusion(s1="ab", s2="eidboaoo")
+    assert sol.checkInclusion(s1="a", s2="ab")
+    assert sol.checkInclusion(s1="adc", s2="dcda")
+    assert not sol.checkInclusion(s1="ab", s2="a")
+    assert sol.checkInclusion(
         s1="trinitrophenylmethylnitramine", s2="dinitrophenylhydrazinetrinitrophenylmethylnitramine"
     )
-    assert not sol.checkInclusion2("abd", "abcabe")
+    assert not sol.checkInclusion(s1="abd", s2="abcabe")

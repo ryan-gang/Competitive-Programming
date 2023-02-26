@@ -1,18 +1,15 @@
-from typing import List
-
-
-# Runtime: 332 ms, faster than 21.84% of Python3 online submissions.
-# Memory Usage: 14.9 MB, less than 16.32% of Python3 online submissions.
-# T : O(N^2), S : O(1)
 class Solution:
-    def set_col_to_zero(self, col):
+    def set_col_to_zero(self, col: int):
         for row in self.matrix:
             row[col] = 0
 
-    def set_row_to_zero(self, row):
+    def set_row_to_zero(self, row: int):
         self.matrix[row] = [0 for _ in range(self.c)]
 
-    def setZeroes(self, matrix: List[List[int]]) -> None:
+    # Runtime: 332 ms, faster than 21.84% of Python3 online submissions.
+    # Memory Usage: 14.9 MB, less than 16.32% of Python3 online submissions.
+    # T : O(N^2), S : O(1)
+    def setZeroes(self, matrix: list[list[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
@@ -47,19 +44,38 @@ class Solution:
         if transform_col0:
             self.set_col_to_zero(0)
 
+    # Runtime: 126 ms, faster than 90.45%.
+    # Memory Usage: 14.9 MB, less than 25.71%.
+    # T : O(N^2), S : O(1)
+    def setZeroes1(self, matrix: list[list[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        self.matrix = matrix
+        self.r, self.c = len(matrix), len(matrix[0])
+        rows: set[int] = set()  # Add row indices to rows, will set these rows to 0.
+        cols: set[int] = set()  # Add col indices to cols, will set these cols to 0.
+        for row_idx, row in enumerate(matrix):
+            for col_idx, cell in enumerate(row):
+                if cell == 0:
+                    rows.add(row_idx)
+                    cols.add(col_idx)
+
+        for col_idx in cols:
+            self.set_col_to_zero(col_idx)
+        for row_idx in rows:
+            self.set_row_to_zero(row_idx)
+
 
 # LeetCode editorial.
 class Solution2(object):
-    def setZeroes(self, matrix):
-        """
-        :type matrix: List[List[int]]
-        :rtype: void Do not return anything, modify matrix in-place instead.
-        """
+    def setZeroes(self, matrix: list[list[int]]) -> None:
         is_col = False
         R = len(matrix)
         C = len(matrix[0])
         for i in range(R):
-            # Since first cell for both first row and first column is the same i.e. matrix[0][0]
+            # Since first cell for both first row and first column
+            # is the same i.e. matrix[0][0]
             # We can use an additional variable for either the first row/column.
             # For this solution we are using an additional variable for the first column
             # and using matrix[0][0] for the first row.

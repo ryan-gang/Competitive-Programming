@@ -1,50 +1,70 @@
-from typing import List, Tuple
-
-
-# Runtime: 78 ms, faster than 77.67% of Python3 online submissions.
-# Memory Usage: 14.2 MB, less than 31.27% of Python3 online submissions.
+# Runtime: 57 ms, faster than 86.52%.
+# Memory Usage: 13.9 MB, less than 96.79%.
+# T : O(N), S : O(1)
 class Solution:
+    """
+    We keep a running count of our current chars occurrences.
+    If the streak is broken, we write the char and its count in the same array.
+    But, rest assured we will never lose information.
+    Because :
+    1. If we are processing a char that occurs only once, we will write it to its index,
+    and no extra index will be taken up.
+    2. For a char with streak = 2, we require 2 indices to write it out.
+    <char>, 2.
+    3. For all other cases, the number of indices required to write out the compressed string
+    is LESS than the number of original chars.
+    So our write_index will always be behind the read_index.
+    And we never lose data.
+    """
+
     @staticmethod
-    def _break_streak(
-        chars: List[str], write_idx: int, prev: str, out: str, streak: int
-    ) -> Tuple[int, int, str]:
-        """Everytime we need to break a streak, we call this method.
-        But also at the end of the string, this code block has to be called. So created a method."""
-        chars[write_idx] = prev
+    def write(chars: list[str], idx: int, count: int, write_idx: int) -> int:
+        chars[write_idx] = chars[idx - 1]
         write_idx += 1
-        out += str(prev)
-        if streak > 1:
-            out += str(streak)
-            if streak > 9:
-                for _ in str(streak):
-                    chars[write_idx] = _
-                    write_idx += 1
-            else:
-                chars[write_idx] = str(streak)
+        if count > 1:
+            for _ in str(count):
+                chars[write_idx] = _
                 write_idx += 1
-        streak = 1
-
-        return streak, write_idx, out
-
-    def compress(self, chars: List[str]) -> int:
-        prev = None
-        streak = 0
-        out = ""
-        n = len(chars)
-        write_idx = 0
-
-        for idx in range(1, n + 1):
-            curr = chars[idx - 1]
-            if (prev != curr) and prev:
-                streak, write_idx, out = Solution._break_streak(chars, write_idx, prev, out, streak)
-            else:
-                streak += 1
-            prev = curr
-
-        _, write_idx, out = Solution._break_streak(chars, write_idx, prev, out, streak)
-
-        print(out, chars, write_idx)
         return write_idx
+
+    def compress(self, chars: list[str]) -> int:
+        write_idx = 0
+        count = 1
+        for idx, val in enumerate(chars):
+            if idx > 0 and chars[idx - 1] == val:
+                count += 1
+            else:
+                if idx > 0:
+                    write_idx = Solution.write(chars, idx, count, write_idx)
+                count = 1
+
+        # We want to write the final character in this instruction.
+        # But as we have a for loop, we will never go to idx + 1.
+        # And our write function always writes the char at idx - 1.
+        # Where idx = len(chars)
+        write_idx = Solution.write(chars, idx + 1, count, write_idx)
+        print(chars)
+        return write_idx
+
+
+# Leetcode Editorial.
+# Clear, concise code.
+class Solution1:
+    def compress(self, chars: list[str]) -> int:
+        i = 0
+        res = 0
+        while i < len(chars):
+            group_length = 1
+            while i + group_length < len(chars) and chars[i + group_length] == chars[i]:
+                group_length += 1
+            chars[res] = chars[i]
+            res += 1
+            if group_length > 1:
+                str_repr = str(group_length)
+                chars[res : res + len(str_repr)] = list(str_repr)
+                res += len(str_repr)
+            i += group_length
+        return res
 
 
 if __name__ == "__main__":
@@ -53,3 +73,4 @@ if __name__ == "__main__":
     assert (
         sol.compress(chars=["a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"]) == 4
     )
+    assert sol.compress(["a", "b", "c"]) == 3

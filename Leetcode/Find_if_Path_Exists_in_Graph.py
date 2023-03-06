@@ -1,17 +1,14 @@
 from collections import defaultdict, deque
-from typing import List, Set
-
 from StarterCode.Union_Find import Union
 
 
-# Ref : https://leetcode.com/problems/find-if-path-exists-in-graph/
-# discuss/2673635/Bidirectional-Search-in-Python
 class Solution:
     # Runtime: 4157 ms, faster than 29.57% of Python3 online submissions.
     # Memory Usage: 106.4 MB, less than 58.30% of Python3 online submissions.
     # T : O(k^d), S : O(k^(d-1))
-    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
-        self.graph: defaultdict[int, List[int]] = defaultdict(list)
+    # Unidirectional Bread First Search.
+    def validPath(self, n: int, edges: list[list[int]], source: int, destination: int) -> bool:
+        self.graph: defaultdict[int, list[int]] = defaultdict(list)
 
         for start, end in edges:
             self.graph[start].append(end)
@@ -19,7 +16,7 @@ class Solution:
 
         def bfs(src: int, dst: int):
             queue = deque([src])
-            visited: List[int] = []
+            visited: set[int] = set()
             while queue:
                 node = queue.popleft()
                 if node in visited:
@@ -27,17 +24,16 @@ class Solution:
                 if node == dst:
                     return True
                 queue.extend(self.graph[node])
-                visited.append(node)
+                visited.add(node)
             return False
 
         return bfs(source, destination)
 
     # Runtime: 3745 ms, faster than 44.97% of Python3 online submissions.
     # Memory Usage: 106.5 MB, less than 39.90% of Python3 online submissions.
-    def validPathBidirectionalEachNodeAtATime(
-        self, n: int, edges: List[List[int]], source: int, destination: int
-    ) -> bool:
-        self.graph: defaultdict[int, List[int]] = defaultdict(list)
+    # Bidirectional Bread First Search.
+    def validPath1(self, n: int, edges: list[list[int]], source: int, destination: int) -> bool:
+        self.graph: defaultdict[int, list[int]] = defaultdict(list)
 
         for start, end in edges:
             self.graph[start].append(end)
@@ -75,26 +71,23 @@ class Solution:
     # Runtime: 3745 ms, faster than 44.97% of Python3 online submissions.
     # Memory Usage: 106.5 MB, less than 39.90% of Python3 online submissions.
     # T : O(k^(d/2)), S : O(k^(d/2))
-    def validPathBidirectional(
-        self, n: int, edges: List[List[int]], source: int, destination: int
-    ) -> bool:
+    # Bidirectional Bread First Search.
+    def validPath2(self, n: int, edges: list[list[int]], source: int, destination: int) -> bool:
         """
-        We start BFS from both source and destination, if both the searches reach a common node,
+        We start BFS from both source and destination,
+        if both the searches reach a common node,
         we can say that there is a path from source to destination.
         This implementation, traverses a layer at a time, from both sides.
-
         If we run BFS only from source, till destination.
         We will traverse ~(k^d) nodes.
         But if we run BFS from both source and destination.
         We will traverse (k^d/2) + (k^d/2) nodes.
-
-        (If we assume, each node has k children, and the distance between the source and
+        (Where, each node has k children, and the distance between the source and
         destination is d nodes.)
-
         That's a time saving in the order of O(k^d/2), at the expense of some additional
-        O(k^d/2) space."""
-
-        self.graph: defaultdict[int, List[int]] = defaultdict(list)
+        O(k^d/2) space.
+        """
+        self.graph: defaultdict[int, list[int]] = defaultdict(list)
 
         for start, end in edges:
             self.graph[start].append(end)
@@ -103,13 +96,13 @@ class Solution:
         def bfs_bidirection(src: int, dst: int):
             queue_src = deque([src])
             queue_dst = deque([dst])
-            visited_src: Set[int] = set()
-            visited_dst: Set[int] = set()
+            visited_src: set[int] = set()
+            visited_dst: set[int] = set()
 
             while queue_src or queue_dst:
                 # Nodes from the next layer from current layer nodes.
-                queue_src_tmp: List[int] = []
-                queue_dst_tmp: List[int] = []
+                queue_src_tmp: list[int] = []
+                queue_dst_tmp: list[int] = []
 
                 # We iterate over all the nodes in our current layer, adding them to the
                 # visited set, and for every node, we put their children into a seperate list.
@@ -147,13 +140,16 @@ class Solution:
 
     # Runtime: 4669 ms, faster than 26.95%.
     # Memory Usage: 103.6 MB, less than 90.52%.
-    # T : O(N), S : O(N) # FIXME Not Sure.
-    def validPathDSU(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    # T : O(?), S : O(N) ; Time Complexity is O(m.alpha(n)),
+    # where alpha is the Inverse Ackermann Function.
+    # Union Find Solution.
+    def validPath3(self, n: int, edges: list[list[int]], source: int, destination: int) -> bool:
         """
         Using Union Find to solve the question.
         Every node is added as a node in our DSU.
         And for every edge, between them the two nodes are joint together.
-        Finally we check if the source and destination are joint or not."""
+        Finally we check if the source and destination are joint or not.
+        """
         uf = Union(n)
         for v1, v2 in edges:
             if not uf.exists(v1):
@@ -167,11 +163,11 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
-    assert sol.validPathDSU(n=3, edges=[[0, 1], [1, 2], [2, 0]], source=0, destination=2)
-    assert not sol.validPathDSU(
+    assert sol.validPath(n=3, edges=[[0, 1], [1, 2], [2, 0]], source=0, destination=2)
+    assert not sol.validPath(
         n=6, edges=[[0, 1], [0, 2], [3, 5], [5, 4], [4, 3]], source=0, destination=5
     )
-    assert not sol.validPathDSU(
+    assert not sol.validPath(
         n=10,
         edges=[[2, 9], [7, 8], [5, 9], [7, 2], [3, 8], [2, 8], [1, 6], [3, 0], [7, 0], [8, 5]],
         source=1,

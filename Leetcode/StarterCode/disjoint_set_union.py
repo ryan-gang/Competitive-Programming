@@ -111,3 +111,13 @@ class Union:
         """
         self.parent[node] = node
         self.size[node] = 1
+
+    def count_parents(self) -> int:
+        """
+        Return the total number of parents in the self.parents list.
+        """
+        parents = 0
+        for idx in range(len(self.parent)):
+            parents += idx == self.parent[idx]
+
+        return parents

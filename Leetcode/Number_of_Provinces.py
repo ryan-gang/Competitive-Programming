@@ -4,8 +4,10 @@ from Leetcode.StarterCode.disjoint_set_union import Union
 class Solution:
     """
     Use a disjoint set union data structure to efficiently perform union
-    operations, and finally get the count of parent nodes."""
+    operations, and finally get the count of parent nodes.
+    """
 
+    # T : O(N^2), S : O(N)
     def findCircleNum(self, is_connected: list[list[int]]) -> int:
         n = len(is_connected)
         uf = Union(n)
@@ -55,33 +57,20 @@ class Solution1:
         res = 0
         for i in range(len(is_connected)):
             if i not in seen:
-                toSee: list[int] = [i]
-                while len(toSee):
-                    cur = toSee.pop()
+                to_see: list[int] = [i]
+                while len(to_see):
+                    cur = to_see.pop()
                     if cur not in seen:
                         seen.add(cur)
-                        toSee = [
+                        to_see = [
                             j for j, v in enumerate(is_connected[cur]) if v and j not in seen
-                        ] + toSee
+                        ] + to_see
                 res += 1
         return res
 
 
 if __name__ == "__main__":
     sol = Solution()
-    print(
-        sol.findCircleNum(
-            is_connected=[
-                [1, 1, 1, 0, 0, 0, 0],
-                [1, 1, 1, 0, 0, 0, 1],
-                [1, 1, 1, 0, 0, 0, 1],
-                [0, 0, 0, 1, 1, 0, 0],
-                [0, 0, 0, 1, 1, 0, 0],
-                [0, 0, 0, 0, 0, 1, 0],
-                [0, 1, 1, 0, 0, 0, 1],
-            ]
-        )
-    )
     assert sol.findCircleNum(is_connected=[[1, 1, 0], [1, 1, 0], [0, 0, 1]]) == 2
     assert sol.findCircleNum(is_connected=[[1, 0, 0], [0, 1, 0], [0, 0, 1]]) == 3
     assert (

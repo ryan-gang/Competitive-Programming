@@ -1,5 +1,5 @@
 class Solution:
-    def NoOfChicks(self, N):
+    def NoOfChicks(self, N: int) -> int:
         dp = [0] * 36  # 1-indexed array, where dp[i] is the ith day.
         dp[1] = 1
         for i in range(2, 36):

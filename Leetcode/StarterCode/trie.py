@@ -34,10 +34,9 @@ class Trie:
         else:
             return node.is_end
 
-    # T : O(M), where M is the sum of lengths of all the words in our Trie.
-    # For a wildcard search on "...." the dfs will visit all nodes.
-    # Without any wildcard char, T : O(m), m is length of `word`.
-    def __wildcard_search__(self, word: str, wildcard_char: str = ".", end_of_word: bool = True):
+    def __wildcard_search__(
+        self, word: str, wildcard_char: str = ".", end_of_word: bool = True
+    ):
         def dfs(node: TrieNode, idx: int) -> bool:
             if idx == len(word):
                 if not end_of_word:
@@ -72,7 +71,6 @@ class Trie:
 
 
 if __name__ == "__main__":
-    # Sample usage.
     trie = Trie()
     trie.insert(word="bad")
     trie.insert(word="dad")

@@ -46,7 +46,7 @@ class Solution:
     # i.e. 11011 -> 11011000 (shift 3 bits to the left) -> 11011100 (set `100). ans = 0b11011100
     # so now we can see a pattern here
     # we need to shift `l` bits of the previous ans to the left and add the current `i`
-    # how to know `l`? it is not difficult to see `x` only increases when we meet power of 2
+    # how to know `l`? it is not difficult to see `x` wonly increases when we meet power of 2
     def concatenatedBinaryBinMan(self, n: int) -> int:
         M = 10**9 + 7
         l, ans = 0, 0  # `l` is the bit length to be shifted

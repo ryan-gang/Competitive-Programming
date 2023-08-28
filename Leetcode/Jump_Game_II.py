@@ -5,7 +5,8 @@ class Solution:
     """
     At every iteration, we make all the jumps possible from current index, and keep track of the
     number of jumps made in THIS specific jump path.
-    When we reach the end, keep track of the min number of jumps."""
+    When we reach the end, keep track of the min number of jumps.
+    """
 
     # 95/109 TC Passed. TLE.
     # T : O(N!), S : O(N)
@@ -13,12 +14,12 @@ class Solution:
     # So we require O(N*(N-1)*(N-2)...1) = O(N!).
     # O(N) space for the call stack space.
     # But using the cache, reduces the time complexity to O(N^2), only this many unique calls.
-    def jumpRecursive(self, nums):
+    def jumpRecursive(self, nums: list[int]):
         self.min_jumps = float("inf")
         N = len(nums)
 
         @cache
-        def dfs(idx, jumps):
+        def dfs(idx: int, jumps: int):
             if idx >= N - 1:
                 self.min_jumps = min(self.min_jumps, jumps)
                 return
@@ -36,7 +37,7 @@ class Solution:
     We keep on doing this for all indices.
     """
     # T : O(N^2), S : O(N)
-    def jumpQuadratic(self, nums):
+    def jumpQuadratic(self, nums: list[int]):
         n = len(nums)
         dp = [float("inf") for _ in range(n)]
         dp[-1] = 0
@@ -58,10 +59,10 @@ class Solution:
     We are mario, the idx is the train coming towards us, stay at index for as long as possible,
     but if train has caught up, jump to the farthest.
     """
-    # Runtime: 278 ms, faster than 48.38% of Python3 online submissions.
-    # Memory Usage: 15 MB, less than 57.51% of Python3 online submissions.
+    # Runtime: 127 ms, faster than 88.46% of Python3 online submissions.
+    # Memory Usage: 15.1 MB, less than 54.94% of Python3 online submissions.
     # T : O(N), S : O(1)
-    def jump(self, nums):
+    def jump(self, nums: list[int]):
         n = len(nums)
         idx = curr = farthest = jumps = 0
         while curr < n - 1:
@@ -74,12 +75,13 @@ class Solution:
         return jumps
 
 
-sol = Solution()
-assert sol.jump(nums=[2, 3, 1, 1, 4]) == 2
-assert sol.jump(nums=[2, 3, 0, 1, 4]) == 2
-assert sol.jump(nums=[1]) == 0
-assert sol.jump(nums=[1, 2]) == 1
-assert sol.jump(nums=[2, 2, 1]) == 1
+if __name__ == "__main__":
+    sol = Solution()
+    assert sol.jump(nums=[2, 3, 1, 1, 4]) == 2
+    assert sol.jump(nums=[2, 3, 0, 1, 4]) == 2
+    assert sol.jump(nums=[1]) == 0
+    assert sol.jump(nums=[1, 2]) == 1
+    assert sol.jump(nums=[2, 2, 1]) == 1
 
 
 # Ref : https://leetcode.com/problems/jump-game-ii/

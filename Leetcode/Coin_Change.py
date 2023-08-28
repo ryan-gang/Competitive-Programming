@@ -1,5 +1,4 @@
 import sys
-from typing import List
 
 
 class Solution:
@@ -12,7 +11,7 @@ class Solution:
     # Runtime: 4019 ms, faster than 8.46%.
     # Memory Usage: 14.1 MB, less than 86.15%.
     # T : O(amount * len(coins)), S : O(amount)
-    def coinChange1(self, coins: List[int], amount: int) -> int:
+    def coinChange1(self, coins: list[int], amount: int) -> int:
         default_value = sys.maxsize
         dp = [default_value for _ in range(amount + 1)]
         dp[0] = 0
@@ -26,7 +25,7 @@ class Solution:
     # Runtime: 3845 ms, faster than 38.39%.
     # Memory Usage: 14.2 MB, less than 86.39%.
     # T : O(amount*coins), S : O(amount)
-    def coinChange(self, coins, amount) -> int:
+    def coinChange(self, coins: list[int], amount: int) -> int:
         default = sys.maxsize
         dp = [default] * (amount + 1)
         dp[0] = 0

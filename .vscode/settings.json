@@ -10,13 +10,14 @@
     "python.testing.pytestEnabled": true,
     "materialTheme.accent": "Purple",
     // "'mononoki', 'syne mono','novamono', 'Jetbrains Mono', 'fira code'
-    "editor.fontFamily": "'Iosevka Comfy', 'Courier New', monospace",
-    "editor.fontLigatures": true,
-    "editor.fontSize": 15.5,
+    "editor.fontFamily": "'Victor Mono', 'Iosevka Comfy', 'Courier New', monospace",
+    "editor.fontLigatures": "'ss01'",
+    "editor.fontSize": 15,
     "editor.fontWeight": "300",
     "editor.inlayHints.fontFamily": "'mononoki', 'Courier New', monospace",
-    "scm.inputFontFamily": "novamono",
-    "debug.console.fontFamily": "fira code",
+    "scm.inputFontFamily": "mononoki",
+    "debug.console.fontFamily": "mononoki",
+    "terminal.integrated.fontFamily": "mononoki",
     "todo-tree.highlights.customHighlight": {
         "TODO": {
             "icon": "check",
@@ -34,8 +35,19 @@
     },
     "python.defaultInterpreterPath": "venvCP\\Scripts\\python.exe",
     "editor.tokenColorCustomizations": {
-        "comments": "",
-        "textMateRules": []
+        "comments": "#cccc00",
+        "textMateRules": [
+            {
+                "scope": "comment",
+                "settings": {
+                    "fontStyle": "italic",
+                }
+            }
+        ]
     },
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "strict",
+    "cSpell.words": [
+        "conver",
+        "mincost"
+    ]
 }

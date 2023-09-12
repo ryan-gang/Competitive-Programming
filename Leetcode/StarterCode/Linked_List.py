@@ -1,18 +1,61 @@
-import json
+from typing import Optional
 
 
 # Definition for singly-linked list.
 class ListNode:
-    def __init__(self, x):
+    def __init__(self, val: int = 0, next: Optional["ListNode"] = None):
+        self.val: int = val
+        self.next: Optional[ListNode] = next
+
+    def __str__(self):
+        s = f"ListNode -> val: {self.val}, next: {self.next}."
+        return s
+
+
+# Definition for doubly-linked list.
+class DLListNode(ListNode):
+    def __init__(
+        self, x: int, next: Optional["DLListNode"] = None, prev: Optional["DLListNode"] = None
+    ):
         self.val = x
-        self.next = None
+        self.prev, self.next = prev, next
 
 
-def stringToIntegerList(input):
-    return json.loads(input)
+# Util methods.
+def linkedListToStringRepresentation(node: ListNode) -> str:
+    out = ""
+    while node and node.next:
+        out += f"{str(node.val)} -> "
+        node = node.next
+
+    if node:
+        out += f"{(node.val)}"
+    else:
+        pass
+
+    return out
 
 
-def stringToListNode(input):
+def stringToIntegerList(input: str) -> list[int]:
+    return list(map(int, input.split(",")))
+
+
+def arrayToListNode(numbers: list[int]) -> Optional[ListNode]:
+    """
+    Takes in a array of integers and creates a linked list,
+    returns the head of the linked list.
+    """
+    dummyRoot = ListNode(0)
+    ptr = dummyRoot
+    for number in numbers:
+        ptr.next = ListNode(number)
+        ptr = ptr.next
+
+    ptr = dummyRoot.next
+    return ptr
+
+
+def stringToListNode(input: str) -> Optional[ListNode]:
     # Generate list from the input
     numbers = stringToIntegerList(input)
 
@@ -27,7 +70,7 @@ def stringToListNode(input):
     return ptr
 
 
-def prettyPrintLinkedList(node):
+def prettyPrintLinkedList(node: Optional[ListNode]) -> None:
     while node and node.next:
         print(str(node.val) + "->", end="")
         node = node.next
@@ -38,7 +81,7 @@ def prettyPrintLinkedList(node):
         print("Empty LinkedList")
 
 
-def main():
+def inputListPrintLinkedList():
     import sys
 
     def readlines():
@@ -53,7 +96,3 @@ def main():
             prettyPrintLinkedList(node)
         except StopIteration:
             break
-
-
-if __name__ == "__main__":
-    main()

@@ -3,17 +3,22 @@ from typing import Optional
 
 # Definition for a binary tree node.
 class TreeNode:
-    def __init__(self, x, left: Optional["TreeNode"] = None, right: Optional["TreeNode"] = None):
+    def __init__(
+        self,
+        x: int,
+        left: Optional["TreeNode"] = None,
+        right: Optional["TreeNode"] = None,
+    ):
         self.val = x
-        self.left: Optional[TreeNode] = left
-        self.right: Optional[TreeNode] = right
+        self.left = left
+        self.right = right
 
 
-def treeNodeToString(root):
+def treeNodeToString(root: Optional[TreeNode]):
     if not root:
         return "[]"
     output = ""
-    queue = [root]
+    queue: list[Optional[TreeNode]] = [root]
     current = 0
     while current != len(queue):
         node = queue[current]
@@ -29,39 +34,38 @@ def treeNodeToString(root):
     return "[" + output[:-2] + "]"
 
 
-def stringToTreeNode(input):
-    if not input:
+def stringToTreeNode(input_list: list[Optional[int]]):
+    if not input_list or not input_list[0]:
         return None
 
-    inputValues = [s for s in input]
-    root = TreeNode(int(inputValues[0]))
-    nodeQueue = [root]
+    root = TreeNode(int(input_list[0]))
+    queue = [root]
     front = 0
     index = 1
-    while index < len(inputValues):
-        node = nodeQueue[front]
+    while index < len(input_list):
+        node = queue[front]
         front = front + 1
 
-        item = inputValues[index]
+        item = input_list[index]
         index = index + 1
-        if item != "null":
+        if item is not None:
             leftNumber = int(item)
             node.left = TreeNode(leftNumber)
-            nodeQueue.append(node.left)
+            queue.append(node.left)
 
-        if index >= len(inputValues):
+        if index >= len(input_list):
             break
 
-        item = inputValues[index]
+        item = input_list[index]
         index = index + 1
-        if item != "null":
+        if item is not None:
             rightNumber = int(item)
             node.right = TreeNode(rightNumber)
-            nodeQueue.append(node.right)
+            queue.append(node.right)
     return root
 
 
-def prettyPrintTree(node, prefix="", isLeft=True):
+def prettyPrintTree(node: Optional[TreeNode], prefix: str = "", isLeft: bool = True):
     if not node:
         print("Empty Tree")
         return
@@ -76,46 +80,29 @@ def prettyPrintTree(node, prefix="", isLeft=True):
 
 
 # Traversals.
-def inorder(node):
+def inorder(node: Optional[TreeNode]):
     if node is not None:
         inorder(node.left)
         print(node.val, end=", ")
         inorder(node.right)
 
 
-def preorder(node):
+def preorder(node: Optional[TreeNode]):
     if node is not None:
         print(node.val, end=", ")
         preorder(node.left)
         preorder(node.right)
 
 
-def postorder(node):
+def postorder(node: Optional[TreeNode]):
     if node is not None:
         postorder(node.left)
         postorder(node.right)
         print(node.val, end=", ")
 
 
-def main():
-    import sys
-
-    def readlines():
-        for line in sys.stdin:
-            yield line.strip("\n")
-
-    lines = readlines()
-    while True:
-        try:
-            line = next(lines)
-            node = stringToTreeNode(line)
-            prettyPrintTree(node)
-        except StopIteration:
-            break
-
-
 if __name__ == "__main__":
-    tree = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    tree = [1, 2, 3, 4, None, 5, 6, 7, 8, 9]
     node = stringToTreeNode(tree)
     prettyPrintTree(node)
     print("\nInorder")

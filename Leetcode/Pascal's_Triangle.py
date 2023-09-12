@@ -1,31 +1,17 @@
-from typing import List
-
-
 class Solution:
-    # Runtime: 69 ms, faster than 5.82%.
-    # Memory Usage: 14 MB, less than 17.88%.
-    # T : O(N^2), S : O(N^2)
-    def generate(self, numRows: int) -> List[List[int]]:
-        pascals_triangle = []
-        first_row = [1]
-        pascals_triangle.append(first_row)
-        prev_row = first_row
-        for i in range(numRows - 1):
-            curr_row = self.create_next_row(prev_row)
-            prev_row = curr_row
-            pascals_triangle.append(curr_row)
-
-        return pascals_triangle
-
-    def create_next_row(self, prev_row: List[int]):
-        curr_row = []
-        curr_row.append(prev_row[0])
-        lo = 0
-        while lo < len(prev_row) - 1:
-            hi = lo + 1
-            val = prev_row[lo] + prev_row[hi]
-            curr_row.append(val)
-            lo += 1
-
-        curr_row.append(prev_row[-1])
-        return curr_row
+    # T : O(N), S : O(1)
+    def generate(self, numRows: int) -> list[list[int]]:
+        triangle: list[list[int]] = []
+        for i in range(numRows):  # For each row
+            elements = i + 1
+            if elements < 3:  # If less than 3 elements, add only 1's
+                triangle.append([1] * elements)
+            else:
+                prev = triangle[i - 1]  # Else take previous row
+                curr = [1]  # Add starting 1
+                for b in range(1, len(prev)):
+                    a = b - 1  # for every pair of elements add the sum to curr
+                    curr.append(prev[a] + prev[b])
+                curr.append(1)  # Add ending 1
+                triangle.append(curr)  # Add current row
+        return triangle

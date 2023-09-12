@@ -1,14 +1,13 @@
 from collections import defaultdict, Counter
-from typing import List
 
 
 class Solution:
-    # Runtime: 939 ms, faster than 35.20% of Python3 online submissions.
-    # Memory Usage: 15.3 MB, less than 25.22% of Python3 online submissions.
-    def isPossible(self, nums: List[int]) -> bool:
-        # key: ending number, val: how many seqs
-        seq = defaultdict(int)
-        # key: number, val: how many of key are left unchecked in nums
+    # Runtime: 939 ms, faster than 35.20%.
+    # Memory Usage: 15.3 MB, less than 25.22%.
+    def isPossible(self, nums: list[int]) -> bool:
+        # k,v : ending number -> how many seqs
+        seq: dict[int, int] = defaultdict(int)
+        # k,v : number -> how many of key are left unchecked in nums
         left = Counter(nums)
 
         for num in nums:
@@ -38,6 +37,7 @@ class Solution:
         return True
 
 
-sol = Solution()
-print(sol.isPossible(nums=[1, 2, 3, 3, 4, 5]))
-print(sol.isPossible(nums=[1, 2, 3, 4, 4, 5, 6]))
+if __name__ == "__main__":
+    sol = Solution()
+    print(sol.isPossible(nums=[1, 2, 3, 3, 4, 5]))
+    print(sol.isPossible(nums=[1, 2, 3, 4, 4, 5, 6]))

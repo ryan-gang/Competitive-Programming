@@ -1,22 +1,14 @@
-from typing import List
-
-
-firstList = [[0, 2], [5, 10], [13, 23], [24, 25]]
-secondList = [[1, 5], [8, 12], [15, 24], [25, 26]]
-Output = [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]
-
-
 class Solution:
-    # Runtime: 335 ms, faster than 8.37% of Python3 online submissionssecond.
-    # Memory Usage: 14.8 MB, less than 87.53% of Python3 online submissionssecond.
+    # Runtime: 335 ms, faster than 8.37%.
+    # Memory Usage: 14.8 MB, less than 87.53%.
     # T : O(M + N), S : O(M + N)
     def intervalIntersection(
-        self, firstList: List[List[int]], secondList: List[List[int]]
-    ) -> List[List[int]]:
+        self, firstList: list[list[int]], secondList: list[list[int]]
+    ) -> list[list[int]]:
         out = []
         i = j = 0
         while i < len(firstList) and j < len(secondList):
-            # For every pair of 2 intervals, compute the max
+            # For every pair of two intervals, compute the max
             # of their starts, and the min of their ends.
             # If the start and end are in order (start < end),
             # that signifies the intersection is valid.
@@ -37,12 +29,12 @@ class Solution:
     # Runtime: 211 ms, faster than 62.62% of Python3 online submissions.
     # Memory Usage: 14.9 MB, less than 51.17% of Python3 online submissions.
     def intervalIntersection2(
-        self, firstList: List[List[int]], secondList: List[List[int]]
-    ) -> List[List[int]]:
+        self, firstList: list[list[int]], secondList: list[list[int]]
+    ) -> list[list[int]]:
         out = []
         i = j = 0
         while i < len(firstList) and j < len(secondList):
-            # For every pair of 2 intervals,
+            # For every pair of two intervals,
             # we first check if the intervals actually intersect,
             # for the intervals to intersect,
             # A has to start before B ends, & A has to end after B starts.
@@ -63,5 +55,9 @@ class Solution:
         return out
 
 
-sol = Solution()
-assert sol.intervalIntersection2(firstList, secondList) == Output
+if __name__ == "__main__":
+    sol = Solution()
+    f = [[0, 2], [5, 10], [13, 23], [24, 25]]
+    s = [[1, 5], [8, 12], [15, 24], [25, 26]]
+    o = [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]
+    assert sol.intervalIntersection2(firstList=f, secondList=s) == o

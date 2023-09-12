@@ -1,48 +1,50 @@
-from StarterCode.Linked_List_Utils import arrayToListNode, prettyPrintLinkedList
+from typing import Optional
+from Leetcode.StarterCode.Linked_List import ListNode
 
-head = arrayToListNode([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-prettyPrintLinkedList(head)
 
-left = 3
-right = 7
+class Solution:
+    """
+    Linked list : A -> B -> C -> D, and we need to reverse the list between B, C.
+    Get node just before B. Get node just after C.
+    Reverse B to C.
+    Add proper pointers. A -> B' and C' -> D.
+    """
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        rev_head_prev = self.getNthNode(head, left - 1)
+        rev_head = self.getNthNode(head, left)
+        rev_tail = self.getNthNode(head, right)
+        overall_tail = self.getNthNode(head, right + 1)
 
-"""
-curr = head
-count = left - 2
-while count > 0:
-    curr = curr.next
-    count -= 1
+        rev_tail.next = None
+        rev_head = self.reverseLinkedList(rev_head)
+        rev_tail = self.getNthNode(rev_head, right - left + 1)
+        rev_tail.next = overall_tail
 
-pre_left = curr
+        if rev_head_prev is not None:
+            rev_head_prev.next = rev_head
+            return head
+        else:
+            return rev_head
 
-curr = head
-count = right
-while count > 0:
-    curr = curr.next
-    count -= 1
+    def reverseLinkedList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        while head:
+            next_node = head.next
+            head.next = prev
+            prev = head
+            head = next_node
+        return prev
 
-post_right = curr
+    def getNthNode(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        if n < 1:
+            return None
+        while head and n > 1:
+            head = head.next
+            n -= 1
+        return head
 
-N = (right - left + 1) - 1
-curr = pre_left.next
-curr_next = curr.next
-while N > 0:
-    post_curr_next = curr_next.next
-    curr_next.next = curr
-    curr = curr_next
-    curr_next = post_curr_next
-    N -= 1
-rev_head = curr
-
-pre_left.next.next = post_right
-pre_left.next = rev_head
-
-prettyPrintLinkedList(head)
-"""
-
-curr = head
-index = 1
-
-while curr:
-    if index == left - 1:
-        pass
+    def printNode(self, node: Optional[ListNode]) -> None:
+        if node is None:
+            print("None")
+        else:
+            print(node.val)

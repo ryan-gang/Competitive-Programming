@@ -5,7 +5,7 @@ class Solution:
     def intervalIntersection(
         self, firstList: list[list[int]], secondList: list[list[int]]
     ) -> list[list[int]]:
-        out = []
+        out: list[list[int]] = []
         i = j = 0
         while i < len(firstList) and j < len(secondList):
             # For every pair of two intervals, compute the max
@@ -31,7 +31,7 @@ class Solution:
     def intervalIntersection2(
         self, firstList: list[list[int]], secondList: list[list[int]]
     ) -> list[list[int]]:
-        out = []
+        out: list[list[int]] = []
         i = j = 0
         while i < len(firstList) and j < len(secondList):
             # For every pair of two intervals,

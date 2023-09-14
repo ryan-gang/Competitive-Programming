@@ -1,7 +1,6 @@
 from collections import deque, defaultdict
 from typing import Optional
-
-from Leetcode.StarterCode.binary_tree import TreeNode
+from Leetcode.StarterCode.Binary_Tree import TreeNode
 
 
 class Solution:
@@ -23,11 +22,11 @@ class Solution:
 
         build_graph(root, None)
 
-        answer = []
+        answer: list[int] = []
         visited: set[int] = {target.val}
 
         # Add the target node to the queue with a distance of 0
-        queue = deque([(target.val, 0)])
+        queue: deque[tuple[int, int]] = deque([(target.val, 0)])
         while queue:
             curr, distance = queue.popleft()
 
@@ -45,5 +44,32 @@ class Solution:
 
         return answer
 
-# ToDo : https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/solutions/
-#  143798/1ms-beat-100-simple-java-dfs-with-without-hashmap-including-explanation/.
+    """
+    Add child -> parent mappings.
+    Then do BFS from target node, until k hops.
+    """
+    # T : O(N), S : O(N), where N is total number of nodes.
+    def distanceK1(self, root: TreeNode, target: TreeNode, k: int) -> list[int]:
+        mapping: dict[TreeNode, TreeNode] = {}  # Child -> Parent mapping.
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            if left_child := node.left:
+                mapping[left_child] = node
+                queue.append(left_child)
+            if right_child := node.right:
+                mapping[right_child] = node
+                queue.append(right_child)
+
+        queue = deque([target])
+        seen = set([target])
+        # Seen so that we don't go back to the node where we came from.
+        while k:
+            for _ in range(len(queue)):  # All nodes @ current distance
+                node = queue.popleft()
+                for child in [node.left, node.right, mapping.get(node)]:
+                    if child and child not in seen:
+                        seen.add(child)
+                        queue.append((child))
+            k -= 1
+        return [node.val for node in queue]

@@ -1,10 +1,11 @@
-# Runtime: 871 ms, faster than 87.02% of Python3 online submissions for ...
-# Memory Usage: 13.8 MB, less than 99.46% of Python3 online submissions for ...
 class Solution:
+    # Runtime: 871 ms, faster than 87.02%.
+    # Memory Usage: 13.8 MB, less than 99.46%.
+    # T : O(N^2), S : O(1)
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
 
-        def expand_pallindrome(i, j):
+        def expand_palindrome(i: int, j: int) -> tuple[int, int]:
             while 0 <= i <= j < n and s[i] == s[j]:
                 i -= 1
                 j += 1
@@ -12,29 +13,44 @@ class Solution:
 
         res = (0, 0)
         for i in range(n):
-            b1 = expand_pallindrome(i, i)
-            b2 = expand_pallindrome(i, i + 1)
+            # We consider each char in the string, to be a possible palindrome centre,
+            # and try expanding it.
+            b1 = expand_palindrome(i, i)
+            b2 = expand_palindrome(i, i + 1)
             res = max(
                 res, b1, b2, key=lambda x: x[1] - x[0] + 1
-            )  # find max based on the length of the pallindrome strings.
+            )  # find max based on the length of the palindrome strings.
 
         return s[res[0] : res[1]]
 
+    # T : O(N^2), S : O(N^2)
+    def longestPalindromeDP2D(self, s: str) -> str:
+        n = len(s)
+        dp = [[0] * n for _ in range(n)]  # dp array
+        ans = [0, 0]
 
-sol = Solution()
-print(sol.longestPalindrome("abaabd"))
+        for i in range(n):
+            dp[i][i] = 1  # All strings of len = 1 are palindromes.
 
-# The core logic of the algo is we will iterate over a string,
-# and check if the present character is a palindrome centre or not.
-# We will keep on checking if the characters on both sides of this
-# char are same or not and try to extend this palindrome.
-# We will keep track of the largest palindrome encountered till now.
-# Time : O(N^2)
-# Space : O(1)
-# Ref : https://leetcode.com/problems/longest-palindromic-substring/discuss/2156659/Python-Easy-O(1)-Space-approach
+        # We need to do this to detect even length palindromes.
+        # Else if we iterate for all diff's we will expand only from the odd centre.
+        for i in range(n - 1):
+            if s[i] == s[i + 1]:
+                dp[i][i + 1] = 1
+                ans = [i, i + 1]
 
-# Further reading : https://en.wikipedia.org/wiki/Longest_palindromic_substring#Manacher's_algorithm
+        for diff in range(2, n):
+            for i in range(n - diff):
+                j = i + diff
+                # i -> start, j -> end
+                if s[i] == s[j] and dp[i + 1][j - 1]:
+                    dp[i][j] = 1
+                    ans = [i, j]
 
-# Official sol : https://leetcode.com/problems/longest-palindromic-substring/solution/
+        i, j = ans
+        return s[i : j + 1]
 
-# DP : https://leetcode.com/problems/longest-palindromic-substring/discuss/151144/Bottom-up-DP-Two-pointers
+
+if __name__ == "__main__":
+    sol = Solution()
+    print(sol.longestPalindrome("abaabd"))

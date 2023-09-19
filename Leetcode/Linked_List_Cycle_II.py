@@ -1,5 +1,5 @@
 from typing import Optional
-from StarterCode.Linked_List_Utils import ListNode
+from StarterCode.Linked_List import ListNode
 
 
 """
@@ -31,14 +31,14 @@ m + pl + k = 2m + 2ql + 2k
 m + k = l x (p - 2q) ; p, q are both integers, so p - 2q is an integer.
 Hence m + k = Z x l. Where Z is an int.
 
-Upto this point, p has come to node X and met with q. Now we keep p here, and take q to head.
-From here, q will move m distance to meet with p.
-But p is currently as t k distance from the start of the loop.
+Upto this point, "p" has come to node X and met with "q".
+Now we keep "p" here, and take "q" back to head.
+From here, q will move m distance to meet with "p".
+But p is currently at k distance from the start of the loop.
 So when p and q meet, p will have travelled m + k distance from the start of the loop.
 From our previous finding, m + k = Z x l.
 So p will have moved Z times around the loop, and will be at the start of the loop.
-And as q is guaranteed to meet here, q will also be at the start of the loop.
-We have found the start of the loop.
+Similarly, "q" will also be at the start of the loop. We have found the start of the loop.
 """
 
 

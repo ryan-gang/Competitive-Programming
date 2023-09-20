@@ -1,5 +1,12 @@
 class Solution:
     # T : O(NlogN), S : O(1)
+    def addDigitsNaive(self, num: int) -> int:
+        while len(str(num)) > 1:
+            num = sum(int(i) for i in str(num))
+
+        return num
+
+    # T : O(NlogN), S : O(1)
     def addDigits(self, num: int) -> int:
         while num > 9:
             add = 0
@@ -16,5 +23,5 @@ class Solution:
 
 if __name__ == "__main__":
     sol = Solution()
-    assert (sol.addDigits(num=38)) == 2
-    assert (sol.addDigits(num=0)) == 0
+    assert (sol.addDigitsNaive(num=38)) == 2
+    assert (sol.addDigitsNaive(num=0)) == 0

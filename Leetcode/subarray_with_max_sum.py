@@ -16,9 +16,8 @@ class MaxSubarraySum:
     generating the last element on the fly.
     """
 
-    @staticmethod
-    # Simple.
-    def max_subarray_sum(a: list[int]) -> int:
+    # T : O(N), S : O(N)
+    def max_subarray_sum(self, a: list[int]) -> int:
         prefix = list(accumulate(a))  # prefix sum.
         min_sum = ans = 0
         for val in prefix:
@@ -28,9 +27,9 @@ class MaxSubarraySum:
 
         return ans
 
-    @staticmethod
-    # No prefix array stored, val created on the fly.
-    def max_subarray_sum1(a: list[int]) -> int:
+    # T : O(N), S : O(1)
+    # No prefix array stored
+    def max_subarray_sum1(self, a: list[int]) -> int:
         ans, sum, min_sum = a[0], 0, 0
         for r in range(len(a)):
             sum += a[r]
@@ -39,34 +38,15 @@ class MaxSubarraySum:
 
         return ans
 
-    @staticmethod
-    # Also gets the boundaries of the maximal subarray.
-    def max_subarray_sum_with_boundaries(a: list[int]) -> tuple[int, int, int]:
-        ans, min_pos = a[0], -1
-        ans_l = ans_r = sum = min_sum = 0
-
-        for r in range(len(a)):
-            sum += a[r]
-            cur = sum - min_sum
-            if cur > ans:
-                ans = cur
-                ans_l = min_pos + 1
-                ans_r = r
-            if sum < min_sum:
-                min_sum = sum
-                min_pos = r
-
-        return ans_l, ans_r, ans
-
 
 class MaxSubarraySumKadane:
     """
-    Kadane's algorithm. Proposed by Jay Kadane in 1984.
+    Kadane's algorithm.
 
-    Let's go through the array and accumulate the current prefix sum in some
-    variable s. If at some point s is negative, we just assign s = 0. It is
-    argued that the maximum of all the values that the variable s is assigned to
-    during the algorithm will be the answer to the problem.
+    Go through the array and accumulate the current prefix sum in some variable
+    s. If at some point s is negative, we just assign s = 0. It is argued that
+    the maximum of all the values that the variable s is assigned to during the
+    algorithm will be the answer to the problem.
 
     Proof:
 
@@ -92,9 +72,9 @@ class MaxSubarraySumKadane:
     in which s<0 appeared. This proves that the algorithm is correct.
     """
 
-    @staticmethod
     # Kadane's algo.
-    def max_subarray_sum_kadane(a: list[int]) -> int:
+    # T : O(N), S : O(1)
+    def max_subarray_sum_kadane(self, a: list[int]) -> int:
         add = ans = 0
         for val in a:
             add += val
@@ -103,9 +83,8 @@ class MaxSubarraySumKadane:
 
         return ans
 
-    @staticmethod
     # Also gets the boundaries of the maximal subarray, using Kadane's algo.
-    def max_subarray_sum_kadane_with_boundaries(a: list[int]) -> tuple[int, int, int]:
+    def max_subarray_sum_kadane_with_boundaries(self, a: list[int]) -> tuple[int, int, int]:
         ans, minus_pos = a[0], -1
         ans_l = ans_r = sum = 0
 
